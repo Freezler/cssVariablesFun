@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+
+<body>
+  <main>
+    <div class="controls">
+      <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+      <label for="spacing">Spacing:</label>
+      <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+      <label for="blur">Blur:</label>
+      <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+      <label for="base">Base Color</label>
+      <input id="base" type="color" name="base" value="#b8268f">
+
+      <label for="size">Size:</label>
+      <input id="size" type="range" name="size" min="100" max="500" value="200" data-sizing="px">
+
+      <label for="radius">Radius:</label>
+      <input id="radius" type="range" name="radius" min="0" max="50" value="5" data-sizing="px">
+
+      <label for="filter">Filter</label>
+      <select type="select" name="filter" id="filter">
+        <option value="none">no filter</option>
+        <option value="sepia">Sepia</option>
+        <option value="grayscale">Grayscale</option>
+        <option value="invert">Invert</option>
+        <option value="hue-rotate">Heu-rotate</option>
+        <option value="saturate">Saturate</option>
+        <option value="brightness">brightness</option>
+      </select>
+
+    </div>
+    <div>
+      <img
+        src="https://images.unsplash.com/photo-1713472728570-5a6ef3947de1?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dhttps://sour">
+    </div>
+  </main>
+
+  <style>
+    :root {
+      --base: #b8268f;
+      --spacing: 10px;
+      --blur: 10px;
+      --size: 320px;
+      --radius: 5px;
+      --filter: none;
+
+    }
+
+    main {
+      text-align: center;
+      background: #193549;
+      padding: 72px;
+      border-radius: var(--radius);
+      border: 5px solid var(--base);
+      min-height: 70vh;
+      width: 70vw;
+      margin: auto;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+      width: var(--size);
+      height: var(--size);
+      border-radius: var(--radius);
+      z-index: 50;
+    }
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 32px;
+    }
+
+    span {
+      color: var(--base);
+    }
+
+
+    .controls {
+      margin-bottom: 50px;
+
+
+    }
+
+    input {
+      width: 100px;
+    }
+  </style>
+
+  <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+  </script>
+
+</body>
+
+</html>
